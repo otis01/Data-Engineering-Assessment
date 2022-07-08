@@ -51,7 +51,7 @@ def execute_statement(db: DatabaseObject, sql_statement: str):
     )
 
 
-def combine_results_into_list(iterator_obj):
+def combine_results_into_one_list(iterator_obj):
     """
     Combines the results of an iterator object into a list
     """
@@ -62,7 +62,7 @@ def combine_results_into_list(iterator_obj):
     yield convert_row_to_json(json_out)
 
 
-def combine_results_into_separated_jsons(iterator_obj):
+def combine_results_into_individual_jsons(iterator_obj):
     """
     Combines the results of an iterator object into a line separated JSON
     """
@@ -71,14 +71,15 @@ def combine_results_into_separated_jsons(iterator_obj):
         yield convert_row_to_json(dict(item))
 
 
-def combine_results_into_one_json(iterator_obj):
+def combine_results_into_a_json_key_value(iterator_obj):
     """
     Combines the results of an iterator object into one JSON item
     """
 
     json_out = {}
     for item in iterator_obj:
-        json_out = {**json_out, **{item[0]: item[1]}}
+        item_values = [val for val in dict(item).values()]
+        json_out = {**json_out, **{item_values[0]: item_values[1]}}
     yield convert_row_to_json(json_out)
 
 
